@@ -1,5 +1,5 @@
 from pydantic import BaseModel, PositiveInt, constr
-from typing import Union
+from typing import Optional, Union
 
 
 class SupplierBase(BaseModel):
@@ -28,17 +28,24 @@ class SupplierById(SupplierBase):
         orm_mode = True
 
 
-"""
-    SupplierID = Column(SmallInteger, primary_key=True, server_default=text("nextval('suppliers_supplierid_seq'::regclass)"))
-    CompanyName = Column(String(40), nullable=False)
-    ContactName = Column(String(30))
-    ContactTitle = Column(String(30))
-    Address = Column(String(60))
-    City = Column(String(15))
-    Region = Column(String(15))
-    PostalCode = Column(String(10))
-    Country = Column(String(15))
-    Phone = Column(String(24))
-    Fax = Column(String(24))
-    HomePage = Column(Text)
-"""
+class CategoryBase(BaseModel):
+    CategoryID: PositiveInt
+    CategoryName: constr(max_length=15)
+
+
+class Category(CategoryBase):
+    class Config:
+        orm_mode = True
+
+
+class ProductBase(BaseModel):
+    ProductID: PositiveInt
+    ProductName: constr(max_length=40)
+
+
+class ProductBySupplier(ProductBase):
+    Category: Category
+    Discontinued: int
+
+    class Config:
+        orm_mode = True

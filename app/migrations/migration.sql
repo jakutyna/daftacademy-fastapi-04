@@ -3880,8 +3880,6 @@ ALTER COLUMN "RegionDescription" TYPE character(8);
 ALTER TABLE territories
 ALTER COLUMN "TerritoryDescription" TYPE character(64);
 
-
-
 CREATE SEQUENCE categories_CategoryID_seq OWNED BY categories."CategoryID";
 SELECT setval('categories_CategoryID_seq', coalesce(max("CategoryID"), 0) + 1, false) FROM categories;
 ALTER TABLE categories ALTER COLUMN "CategoryID" SET DEFAULT nextval('categories_CategoryID_seq');

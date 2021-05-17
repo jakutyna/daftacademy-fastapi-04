@@ -10,6 +10,7 @@ from app.database import get_db
 router = APIRouter(tags=['northwind'])
 
 
+# Ex1
 @router.get("/suppliers", response_model=List[schemas.Supplier])
 async def suppliers_view(db: Session = Depends(get_db)):
     return crud.get_suppliers(db)
@@ -21,3 +22,15 @@ async def suppliers_id_view(supplier_id: PositiveInt, db: Session = Depends(get_
     if supplier is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Supplier not found")
     return supplier
+
+
+# Ex2
+@router.get("/suppliers/{supplier_id}/products", response_model=List[schemas.ProductBySupplier])
+async def products_id(supplier_id: PositiveInt, db: Session = Depends(get_db)):
+    products = crud.get_products_by_supplier(db, supplier_id)
+    if len(products) == 0:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Supplier not found")
+    for product in products:
+        category = crud.get_category_by_id(db, product.CategoryID)
+        product.Category = category
+    return products
