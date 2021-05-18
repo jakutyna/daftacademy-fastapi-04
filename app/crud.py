@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 
-from . import models
+from . import models, schemas
 
 
 def get_suppliers(db: Session):
@@ -18,3 +18,11 @@ def get_products_by_supplier(db: Session, supplier_id: int):
 
 def get_category_by_id(db: Session, category_id: int):
     return db.query(models.Category).filter(models.Category.CategoryID == category_id).first()
+
+
+def create_supplier(db: Session, supplier: schemas.SupplierById):
+    db_supplier = models.Supplier(**supplier.dict())
+    db.add(db_supplier)
+    db.commit()
+    db.refresh(db_supplier)
+    return db_supplier

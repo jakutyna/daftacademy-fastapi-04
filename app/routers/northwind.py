@@ -26,7 +26,7 @@ async def suppliers_id_view(supplier_id: PositiveInt, db: Session = Depends(get_
 
 # Ex2
 @router.get("/suppliers/{supplier_id}/products", response_model=List[schemas.ProductBySupplier])
-async def products_id(supplier_id: PositiveInt, db: Session = Depends(get_db)):
+async def products_id_view(supplier_id: PositiveInt, db: Session = Depends(get_db)):
     products = crud.get_products_by_supplier(db, supplier_id)
     if len(products) == 0:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Supplier not found")
@@ -34,3 +34,10 @@ async def products_id(supplier_id: PositiveInt, db: Session = Depends(get_db)):
         category = crud.get_category_by_id(db, product.CategoryID)
         product.Category = category
     return products
+
+
+# Ex3
+@router.post("/suppliers", response_model=schemas.SupplierCreate, status_code=201)
+async def create_supplier_view(supplier: schemas.SupplierCreate, db: Session = Depends(get_db)):
+    supplier = crud.create_supplier(db, supplier)
+    return supplier
