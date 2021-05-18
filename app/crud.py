@@ -1,4 +1,5 @@
 from sqlalchemy.orm import Session
+from fastapi import HTTPException, status
 
 from . import models, schemas
 
@@ -41,4 +42,13 @@ def update_supplier(db: Session, supplier_id: int, supplier: schemas.SupplierUpd
     db.commit()
     # refresh will get latest model instance from db (verification that fields wher updated in db)
     db.refresh(db_supplier)
+    return db_supplier
+
+
+def delete_supplier(db: Session, supplier_id: int):
+    db_supplier = db.query(models.Supplier).filter(models.Supplier.SupplierID == supplier_id).first()
+    if db_supplier is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Supplier not found")
+    db.delete(db_supplier)
+    db.commit()
     return db_supplier

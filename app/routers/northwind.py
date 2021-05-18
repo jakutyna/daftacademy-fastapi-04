@@ -51,3 +51,9 @@ async def update_supplier_view(supplier_id: PositiveInt, supplier: schemas.Suppl
     if db_supplier is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Supplier not found")
     return db_supplier
+
+
+# Ex5
+@router.delete("/suppliers/{supplier_id}", status_code=204)
+async def delete_supplier_view(supplier_id: PositiveInt, db: Session = Depends(get_db)):
+    crud.delete_supplier(db, supplier_id)
