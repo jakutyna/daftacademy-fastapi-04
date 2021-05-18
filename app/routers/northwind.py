@@ -39,5 +39,15 @@ async def products_id_view(supplier_id: PositiveInt, db: Session = Depends(get_d
 # Ex3
 @router.post("/suppliers", response_model=schemas.SupplierCreate, status_code=201)
 async def create_supplier_view(supplier: schemas.SupplierCreate, db: Session = Depends(get_db)):
-    supplier = crud.create_supplier(db, supplier)
-    return supplier
+    db_supplier = crud.create_supplier(db, supplier)
+    return db_supplier
+
+
+# Ex4
+@router.put("/suppliers/{supplier_id}", response_model=schemas.SupplierCreate, status_code=200)
+async def update_supplier_view(supplier_id: PositiveInt, supplier: schemas.SupplierUpdate,
+                               db: Session = Depends(get_db)):
+    db_supplier = crud.update_supplier(db, supplier_id, supplier)
+    if db_supplier is None:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
+    return db_supplier
