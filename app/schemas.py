@@ -29,7 +29,7 @@ class ProductBySupplier(ProductBase):
 
 # ========= Suppliers schemas
 class SupplierBase(BaseModel):
-    SupplierID: Optional[PositiveInt]
+    SupplierID: PositiveInt
     CompanyName: constr(max_length=40)
 
 
@@ -54,33 +54,70 @@ class SupplierById(SupplierBase):
         orm_mode = True
 
 
-class SupplierCreate(SupplierBase):
-    ContactName: Union[constr(max_length=30), None]
-    ContactTitle: Union[constr(max_length=30), None]
-    Address: Union[constr(max_length=60), None]
-    City: Union[constr(max_length=15), None]
-    PostalCode: Union[constr(max_length=10), None]
-    Country: Union[constr(max_length=15), None]
-    Phone: Union[constr(max_length=24), None]
+class SupplierCreate(BaseModel):
+    # CompanyName: constr(max_length=40)
+    # ContactName: Union[constr(max_length=30), None]
+    # ContactTitle: Union[constr(max_length=30), None]
+    # Address: Union[constr(max_length=60), None]
+    # City: Union[constr(max_length=15), None]
+    # PostalCode: Union[constr(max_length=10), None]
+    # Country: Union[constr(max_length=15), None]
+    # Phone: Union[constr(max_length=24), None]
+
+    # SupplierID: int = 0
+    CompanyName: Optional[constr(max_length=40)]
+    ContactName: Optional[constr(max_length=30)]
+    ContactTitle: Optional[constr(max_length=30)]
+    Address: Optional[constr(max_length=60)]
+    City: Optional[constr(max_length=15)]
+    PostalCode: Optional[constr(max_length=10)]
+    Country: Optional[constr(max_length=15)]
+    Phone: Optional[constr(max_length=24)]
 
     class Config:
         orm_mode = True
 
 
-class SupplierCreateResponse(SupplierBase):
-    ContactName: Union[constr(max_length=30), None]
-    ContactTitle: Union[constr(max_length=30), None]
-    Address: Union[constr(max_length=60), None]
-    City: Union[constr(max_length=15), None]
-    PostalCode: Union[constr(max_length=10), None]
-    Country: Union[constr(max_length=15), None]
-    Phone: Union[constr(max_length=24), None]
-    Fax: Union[constr(max_length=24), None]
-    HomePage: Union[str, None]
+class SupplierCreateResponse(BaseModel):
+    # ContactName: Union[constr(max_length=30), None]
+    # ContactTitle: Union[constr(max_length=30), None]
+    # Address: Union[constr(max_length=60), None]
+    # City: Union[constr(max_length=15), None]
+    # PostalCode: Union[constr(max_length=10), None]
+    # Country: Union[constr(max_length=15), None]
+    # Phone: Union[constr(max_length=24), None]
+    # Fax: Union[constr(max_length=24), None]
+    # HomePage: Union[str, None]
+
+    SupplierID: PositiveInt
+    CompanyName: constr(max_length=40)
+    ContactName: Optional[constr(max_length=30)]
+    ContactTitle: Optional[constr(max_length=30)]
+    Address: Optional[constr(max_length=60)]
+    City: Optional[constr(max_length=15)]
+    Region: Optional[constr(max_length=15)]
+    PostalCode: Optional[constr(max_length=10)]
+    Country: Optional[constr(max_length=15)]
+    Phone: Optional[constr(max_length=24)]
+    Fax: Optional[constr(max_length=24)] = None
+    HomePage: Optional[str] = None
 
     class Config:
         orm_mode = True
 
 
-class SupplierUpdate(SupplierBase):
-    ContactName: Union[constr(max_length=30), None]
+class SupplierUpdate(BaseModel):
+    # ContactName: Union[constr(max_length=30), None]
+    CompanyName: Optional[constr(max_length=40)]
+    ContactName: Optional[constr(max_length=30)]
+    ContactTitle: Optional[constr(max_length=30)]
+    Address: Optional[constr(max_length=60)]
+    City: Optional[constr(max_length=15)]
+    PostalCode: Optional[constr(max_length=10)]
+    Country: Optional[constr(max_length=15)]
+    Phone: Optional[constr(max_length=24)]
+    Fax: Optional[constr(max_length=24)] = None
+    HomePage: Optional[str] = None
+
+    class Config:
+        orm_mode = True
