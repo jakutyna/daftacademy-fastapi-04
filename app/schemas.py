@@ -62,8 +62,21 @@ class SupplierCreate(SupplierBase):
     PostalCode: Union[constr(max_length=10), None]
     Country: Union[constr(max_length=15), None]
     Phone: Union[constr(max_length=24), None]
-    Fax: Optional[Union[constr(max_length=24), None]] = None
-    HomePage: Optional[Union[str, None]] = None
+
+    class Config:
+        orm_mode = True
+
+
+class SupplierCreateResponse(SupplierBase):
+    ContactName: Union[constr(max_length=30), None]
+    ContactTitle: Union[constr(max_length=30), None]
+    Address: Union[constr(max_length=60), None]
+    City: Union[constr(max_length=15), None]
+    PostalCode: Union[constr(max_length=10), None]
+    Country: Union[constr(max_length=15), None]
+    Phone: Union[constr(max_length=24), None]
+    Fax: Union[constr(max_length=24), None]
+    HomePage: Union[str, None]
 
     class Config:
         orm_mode = True

@@ -1,0 +1,1 @@
+heroku pg:backups:restore 'https://github.com/jakutyna/daftacademy-fastapi-04/raw/master/app/migrations/northwind.dump' DATABASE_URL --app da-plu-2021-jakutyna --confirm da-plu-2021-jakutyna
